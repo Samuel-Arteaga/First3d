@@ -24,8 +24,13 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-       
+        anim = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
+        playerInput = GetComponent<PlayerInput>();
+        moveAction = playerInput.actions.FindAction("Move");
+        cameraPosition = Camera.main.transform; // Asigna la transformación de la cámara a cameraPosition
     }
+
     void Start()
     {
         playerInput=GetComponent<PlayerInput>();
@@ -41,6 +46,23 @@ public class Player : MonoBehaviour
     private void Movement()
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
-        transform.position += new Vector3(direction.x, 0, direction.y) * playerSpeed * Time.deltaTime;
+
+        // Calcula la dirección en la que se mueve el jugador en relación con la cámara.
+        Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
+        moveDirection.y = 0f; // Asegura que no haya movimiento vertical.
+
+        // Rota al jugador hacia la dirección de movimiento.
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+
+        // Mueve al jugador.
+        controller.Move(moveDirection * playerSpeed * Time.deltaTime);
+
+        // Activa la animación de movimiento.
+        float movementMagnitude = moveDirection.magnitude;
+        anim.SetBool("Caminar", true);
     }
 }
