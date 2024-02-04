@@ -1,8 +1,7 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 
 public class Player : MonoBehaviour
 {
@@ -11,16 +10,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
-    private float rotationSpeed = 0.5f;
+    private float rotationSpeed = 5.0f;
 
     private PlayerInput playerInput;
     private InputAction moveAction;
+    private InputAction runAction;
     private Animator anim;
     private CharacterController controller;
-    private Vector3 playerVelocity;
     private Transform cameraPosition;
-
-    // Start is called before the first frame update
 
     private void Awake()
     {
@@ -28,41 +25,49 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Move");
-        cameraPosition = Camera.main.transform; // Asigna la transformación de la cámara a cameraPosition
+        runAction = playerInput.actions.FindAction("Run");
+        cameraPosition = Camera.main.transform;
     }
 
     void Start()
     {
-        playerInput=GetComponent<PlayerInput>();
-        moveAction = playerInput.actions.FindAction("Move");
+        // No necesitas asignar nuevamente las acciones aquí.
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
+        ActivateAnimations();
     }
 
     private void Movement()
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
-
-        // Calcula la dirección en la que se mueve el jugador en relación con la cámara.
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
-        moveDirection.y = 0f; // Asegura que no haya movimiento vertical.
+        moveDirection.y = 0f;
 
-        // Rota al jugador hacia la dirección de movimiento.
         if (moveDirection != Vector3.zero)
         {
             Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
         }
 
-        // Mueve al jugador.
         controller.Move(moveDirection * playerSpeed * Time.deltaTime);
+    }
 
-        // Activa la animación de movimiento.
+    private void ActivateAnimations()
+    {
+        Vector2 direction = moveAction.ReadValue<Vector2>();
+        float runInput = runAction.ReadValue<float>();
+
+        Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
+        moveDirection.y = 0f;
+
         float movementMagnitude = moveDirection.magnitude;
-        anim.SetBool("Caminar", true);
+
+        // Activar animaciones según las condiciones
+        anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 0.5f);
+        anim.SetBool("idle", movementMagnitude == 0);
+        anim.SetBool("Run", true);
     }
 }
