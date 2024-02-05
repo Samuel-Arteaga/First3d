@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        // No necesitas asignar nuevamente las acciones aquí.
+   
     }
 
     void Update()
@@ -68,6 +68,7 @@ public class Player : MonoBehaviour
         // Activar animaciones según las condiciones
         anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 0.5f);
         anim.SetBool("idle", movementMagnitude == 0);
-        anim.SetBool("Run", true);
+        anim.SetBool("Run", runInput > 0.5f);
     }
+
 }
