@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction runAction;
+    private InputAction jumpAction;
     private Animator anim;
     private CharacterController controller;
     private Transform cameraPosition;
@@ -26,6 +27,7 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Move");
         runAction = playerInput.actions.FindAction("Run");
+        //jumpAction = playerInput.actions.FindAction("Jump");
         cameraPosition = Camera.main.transform;
     }
 
