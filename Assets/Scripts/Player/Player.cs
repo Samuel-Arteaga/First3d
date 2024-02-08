@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 
@@ -8,9 +10,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 3.0f;
     [SerializeField]
-    private float jumpHeight = 1.0f;
+    private float jumpHeight = 5.0f;
     [SerializeField]
     private float rotationSpeed = 5.0f;
+    private bool _isGrounded;
+    private bool _jumpPressed;
+    private float gravityValue = -9.81f;
+    private Vector3 playerVelocity;
 
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -27,7 +33,7 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Move");
         runAction = playerInput.actions.FindAction("Run");
-        //jumpAction = playerInput.actions.FindAction("Jump");
+        jumpAction = playerInput.actions.FindAction("Jump");
         cameraPosition = Camera.main.transform;
     }
 
@@ -39,6 +45,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+        movementJump();
         ActivateAnimations();
     }
 
@@ -71,6 +78,39 @@ public class Player : MonoBehaviour
         anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 0.5f);
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput > 0.5f);
+    }
+    private void movementJump()
+    {
+        float jumpInput = jumpAction.ReadValue<float>();
+        _isGrounded = controller.isGrounded;
+        if(_isGrounded)
+        {
+            playerVelocity.y = 0.0f;
+            anim.SetBool("Jump", jumpInput == 0);
+
+        }
+        if(_jumpPressed && _isGrounded) 
+        {
+            Debug.Log("salto");
+            anim.SetBool("Jump", jumpInput == 1);
+            playerVelocity.y += Mathf.Sqrt(jumpHeight * -1.0f * gravityValue);
+        
+        }
+        playerVelocity.y += gravityValue * Time.deltaTime;
+        controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    void Jump()
+    {
+        Vector2 jumpDirection = jumpAction.ReadValue<Vector2>();
+        if (controller.velocity.y == 0)
+        {
+            _jumpPressed = true;
+        }
+        else
+        {
+            _jumpPressed = false;
+        }
     }
 
 }
