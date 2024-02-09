@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float playerSpeed = 3.0f;
     [SerializeField]
-    private float jumpHeight = 5.0f;
+    private float jumpHeight = 1.0f;
     [SerializeField]
     private float rotationSpeed = 5.0f;
     private bool _isGrounded;
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
-        movementJump();
+        Jump();
         ActivateAnimations();
     }
 
@@ -79,38 +79,29 @@ public class Player : MonoBehaviour
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput > 0.5f);
     }
-    private void movementJump()
-    {
-        float jumpInput = jumpAction.ReadValue<float>();
-        _isGrounded = controller.isGrounded;
-        if(_isGrounded)
-        {
-            playerVelocity.y = 0.0f;
-            anim.SetBool("Jump", jumpInput == 0);
 
-        }
-        if(_jumpPressed && _isGrounded) 
+    private void Jump()
+    {
+        //_isGrounded = controller.isGrounded;
+        //Debug.Log(_isGrounded);
+        // Leer el valor de la entrada de salto
+        float jumpInput = jumpAction.ReadValue<float>();
+
+        // Si el jugador está en el suelo y se pulsa la tecla de salto
+        if (jumpInput > 0)
         {
-            Debug.Log("salto");
-            anim.SetBool("Jump", jumpInput == 1);
-            playerVelocity.y += Mathf.Sqrt(jumpHeight * -1.0f * gravityValue);
-        
+            Debug.Log("Jumping!"); // Depuración
+
+            // Aplicar fuerza vertical para el salto
+            anim.SetBool("Jump", jumpInput > 0);
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+
+            // Activar la animación de salto
         }
+
+        // Aplicar gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-    }
-
-    void Jump()
-    {
-        Vector2 jumpDirection = jumpAction.ReadValue<Vector2>();
-        if (controller.velocity.y == 0)
-        {
-            _jumpPressed = true;
-        }
-        else
-        {
-            _jumpPressed = false;
-        }
     }
 
 }
