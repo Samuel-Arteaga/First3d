@@ -522,7 +522,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2860193, y: 0.016723106, z: -0.0049924916, w: 0.9580649}
+  m_LocalRotation: {x: 0.2860193, y: 0.016723065, z: -0.0049924795, w: 0.9580649}
   m_LocalPosition: {x: -0.13252963, y: 1.2531761, z: -1.4151518}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -683,7 +683,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 0}
   - {fileID: 2100000, guid: d3e0cb34ad57a2448ba74b2d62698180, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -1212,7 +1212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896456931}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2671165, y: 0.01681808, z: -0.0046625403, w: 0.9635062}
+  m_LocalRotation: {x: 0.2671165, y: 0.016818047, z: -0.004662531, w: 0.9635062}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1396,7 +1396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538883964}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2770543, y: 0.016769025, z: -0.004836005, w: 0.96069574}
+  m_LocalRotation: {x: 0.2770543, y: 0.016768992, z: -0.004835997, w: 0.96069574}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1481,7 +1481,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1875398276}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.33733258, y: 0.016429106, z: -0.005888156, w: 0.9412238}
+  m_LocalRotation: {x: 0.33733258, y: 0.01642914, z: -0.0058881682, w: 0.9412238}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1508,6 +1508,7 @@ GameObject:
   - component: {fileID: 1932675283}
   - component: {fileID: 1932675284}
   - component: {fileID: 1932675285}
+  - component: {fileID: 1932675286}
   m_Layer: 0
   m_Name: Personaje
   m_TagString: Untagged
@@ -1624,6 +1625,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &1932675286
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932675280}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &2020442772
 GameObject:
   m_ObjectHideFlags: 3

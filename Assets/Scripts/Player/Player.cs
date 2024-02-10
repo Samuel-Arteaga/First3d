@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     private InputAction moveAction;
     private InputAction runAction;
     private InputAction jumpAction;
+    private InputAction hipHopAction;
     private Animator anim;
     private CharacterController controller;
     private Transform cameraPosition;
@@ -34,12 +35,14 @@ public class Player : MonoBehaviour
         moveAction = playerInput.actions.FindAction("Move");
         runAction = playerInput.actions.FindAction("Run");
         jumpAction = playerInput.actions.FindAction("Jump");
+        hipHopAction = playerInput.actions.FindAction("Dance");
         cameraPosition = Camera.main.transform;
     }
 
     void Start()
     {
    
+        hipHop();
     }
 
     void Update()
@@ -83,25 +86,42 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         //_isGrounded = controller.isGrounded;
-        //Debug.Log(_isGrounded);
-        // Leer el valor de la entrada de salto
         float jumpInput = jumpAction.ReadValue<float>();
 
         // Si el jugador está en el suelo y se pulsa la tecla de salto
-        if (jumpInput > 0)
+        if (jumpInput != 0 && !_jumpPressed)
         {
-            Debug.Log("Jumping!"); // Depuración
-
             // Aplicar fuerza vertical para el salto
-            anim.SetBool("Jump", jumpInput > 0);
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
 
             // Activar la animación de salto
+            anim.SetBool("Jump", true);
+
+            // Indicar que el salto ha sido activado
+            _jumpPressed = true;
+        }
+
+        // Si el jugador no está presionando la tecla de salto, se restablece _jumpPressed
+        if (jumpInput == 0)
+        {
+            _jumpPressed = false;
         }
 
         // Aplicar gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
+
+    private void hipHop()
+    {
+        float danceInput = hipHopAction.ReadValue<float>();
+
+        anim.SetFloat("HipHop", danceInput);
+        //Debug.Log(danceInput);
+
+
+    }
+
+
 
 }
