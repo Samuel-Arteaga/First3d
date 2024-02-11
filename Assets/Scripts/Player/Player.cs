@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -13,9 +14,10 @@ public class Player : MonoBehaviour
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float rotationSpeed = 5.0f;
-    private bool _isGrounded;
+    //private bool _isGrounded;
     private bool _jumpPressed;
     private float gravityValue = -9.81f;
+
     private Vector3 playerVelocity;
 
     private PlayerInput playerInput;
@@ -23,8 +25,12 @@ public class Player : MonoBehaviour
     private InputAction runAction;
     private InputAction jumpAction;
     private InputAction hipHopAction;
+    private InputAction dieAction;
+    private InputAction bendAction;
     private Animator anim;
+    public bool aim;
     private CharacterController controller;
+
     private Transform cameraPosition;
 
     private void Awake()
@@ -36,20 +42,30 @@ public class Player : MonoBehaviour
         runAction = playerInput.actions.FindAction("Run");
         jumpAction = playerInput.actions.FindAction("Jump");
         hipHopAction = playerInput.actions.FindAction("Dance");
+        dieAction = playerInput.actions.FindAction("Die");
+        bendAction = playerInput.actions.FindAction("Bend");
         cameraPosition = Camera.main.transform;
+
+        
     }
 
     void Start()
     {
    
-        hipHop();
     }
 
     void Update()
     {
         Movement();
-        Jump();
         ActivateAnimations();
+    }
+    public void OnAim(InputValue value)
+    {
+        AimInput(value.isPressed);
+    }
+    public void AimInput(bool newAimState) 
+    {
+        aim = newAimState;
     }
 
     private void Movement()
@@ -71,6 +87,10 @@ public class Player : MonoBehaviour
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
         float runInput = runAction.ReadValue<float>();
+        float danceInput = hipHopAction.ReadValue<float>();
+        float jumpInput = jumpAction.ReadValue<float>();
+        float dieInput = dieAction.ReadValue<float>();
+        float bendWalkInput = bendAction.ReadValue<float>();
 
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
         moveDirection.y = 0f;
@@ -81,47 +101,54 @@ public class Player : MonoBehaviour
         anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 0.5f);
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput > 0.5f);
-    }
+        anim.SetBool("HipHop", danceInput == 1);
+        anim.SetBool("Jump", jumpInput == 1);
+        anim.SetBool("Die", dieInput == 1);
+        anim.SetBool("caminarAbajo", bendWalkInput == 1);
 
-    private void Jump()
-    {
-        //_isGrounded = controller.isGrounded;
-        float jumpInput = jumpAction.ReadValue<float>();
-
-        // Si el jugador está en el suelo y se pulsa la tecla de salto
-        if (jumpInput != 0 && !_jumpPressed)
+        //AGACHARSE CAMINANDO
+        if (bendWalkInput == 1)
         {
-            // Aplicar fuerza vertical para el salto
+            anim.SetBool("idle", false);
+        }
+        // Activar la transición de Idle a HipHop cuando danceInput es 1
+        //BAILE
+        if (danceInput == 1)
+        {
+            anim.SetBool("idle", false);
+        }
+
+        //SALTO
+        if (jumpInput == 1 && !_jumpPressed)
+        {
+            //desactivo animaciones antes activadas
+            anim.SetBool("idle", false);
+            anim.SetBool("Caminar", false);
+            anim.SetBool("Run", false);
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
 
-            // Activar la animación de salto
-            anim.SetBool("Jump", true);
-
-            // Indicar que el salto ha sido activado
+            //Indicar que el salto ha sido activado
             _jumpPressed = true;
         }
 
-        // Si el jugador no está presionando la tecla de salto, se restablece _jumpPressed
+        // Si el jugador no está presionando la tecla de salto, se restablece
         if (jumpInput == 0)
         {
             _jumpPressed = false;
         }
-
-        // Aplicar gravedad
+        // Aplico gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        //MORIR
+        if(dieInput == 1)
+        {
+            anim.SetBool("idle", false);
+            anim.SetBool("Caminar", false);
+            anim.SetBool("Run", false);
+        }
+
     }
-
-    private void hipHop()
-    {
-        float danceInput = hipHopAction.ReadValue<float>();
-
-        anim.SetFloat("HipHop", danceInput);
-        //Debug.Log(danceInput);
-
-
-    }
-
 
 
 }
