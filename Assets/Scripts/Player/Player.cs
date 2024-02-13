@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private InputAction hipHopAction;
     private InputAction dieAction;
     private InputAction bendAction;
+    private InputAction shootAction;
     private Animator anim;
     public bool aim;
     private CharacterController controller;
@@ -44,11 +45,9 @@ public class Player : MonoBehaviour
         hipHopAction = playerInput.actions.FindAction("Dance");
         dieAction = playerInput.actions.FindAction("Die");
         bendAction = playerInput.actions.FindAction("Bend");
-        cameraPosition = Camera.main.transform;
-
-        
+        shootAction = playerInput.actions.FindAction("Aim");
+        cameraPosition = Camera.main.transform;   
     }
-
     void Start()
     {
    
@@ -67,7 +66,6 @@ public class Player : MonoBehaviour
     {
         aim = newAimState;
     }
-
     private void Movement()
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
@@ -82,7 +80,6 @@ public class Player : MonoBehaviour
 
         controller.Move(moveDirection * playerSpeed * Time.deltaTime);
     }
-
     private void ActivateAnimations()
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
@@ -91,6 +88,8 @@ public class Player : MonoBehaviour
         float jumpInput = jumpAction.ReadValue<float>();
         float dieInput = dieAction.ReadValue<float>();
         float bendWalkInput = bendAction.ReadValue<float>();
+        float shootInput = shootAction.ReadValue<float>();
+
 
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
         moveDirection.y = 0f;
@@ -105,6 +104,7 @@ public class Player : MonoBehaviour
         anim.SetBool("Jump", jumpInput == 1);
         anim.SetBool("Die", dieInput == 1);
         anim.SetBool("caminarAbajo", bendWalkInput == 1);
+        anim.SetBool("Shoot", shootInput == 1);
 
         //AGACHARSE CAMINANDO
         if (bendWalkInput == 1)
