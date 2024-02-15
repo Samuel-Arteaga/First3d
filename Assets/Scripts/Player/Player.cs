@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     private InputAction dieAction;
     private InputAction bendAction;
     private InputAction shootAction;
+    private InputAction apuntarAction;
     private Animator anim;
     public bool aim;
     private CharacterController controller;
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         hipHopAction = playerInput.actions.FindAction("Dance");
         dieAction = playerInput.actions.FindAction("Die");
         bendAction = playerInput.actions.FindAction("Bend");
+        apuntarAction = playerInput.actions.FindAction("Aim");
         shootAction = playerInput.actions.FindAction("Aim");
         cameraPosition = Camera.main.transform;   
     }
@@ -89,6 +91,7 @@ public class Player : MonoBehaviour
         float dieInput = dieAction.ReadValue<float>();
         float bendWalkInput = bendAction.ReadValue<float>();
         float shootInput = shootAction.ReadValue<float>();
+        float apuntarInput = shootAction.ReadValue<float>();
 
 
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
@@ -104,8 +107,13 @@ public class Player : MonoBehaviour
         anim.SetBool("Jump", jumpInput == 1);
         anim.SetBool("Die", dieInput == 1);
         anim.SetBool("caminarAbajo", bendWalkInput == 1);
-        anim.SetBool("Shoot", shootInput == 1);
-
+        anim.SetBool("Disparar", shootInput == 1);
+        anim.SetBool("Apuntar", apuntarInput == 1);
+        //
+        if (shootInput == 1)
+        {
+            anim.SetBool("Apuntar", false);
+        }
         //AGACHARSE CAMINANDO
         if (bendWalkInput == 1)
         {
