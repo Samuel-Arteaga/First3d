@@ -21,7 +21,7 @@ public class CameraShoot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.aim)
+        if (player.Apuntar)
         {
             aimVirtualCamera.gameObject.SetActive(true);
         }

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private InputAction shootAction;
     private InputAction apuntarAction;
     private Animator anim;
-    public bool aim;
+    public bool Apuntar;
     private CharacterController controller;
 
     private Transform cameraPosition;
@@ -46,27 +46,41 @@ public class Player : MonoBehaviour
         hipHopAction = playerInput.actions.FindAction("Dance");
         dieAction = playerInput.actions.FindAction("Die");
         bendAction = playerInput.actions.FindAction("Bend");
-        apuntarAction = playerInput.actions.FindAction("Aim");
-        shootAction = playerInput.actions.FindAction("Aim");
+        apuntarAction = playerInput.actions.FindAction("Apuntar");
+        shootAction = playerInput.actions.FindAction("Disparar");
         cameraPosition = Camera.main.transform;   
     }
     void Start()
     {
    
     }
+    //private void OnEnable()
+    //{
+    //    runAction.performed += Run;
+    //    runAction.canceled += Run;
+    //}
+    //private void OnDisable()
+    //{
+    //    runAction.performed -= Run;
+    //    runAction.performed -= Run;
+    //}
+    //private void Run(InputAction.CallbackContext ctx)
+    //{
+    //    anim.SetBool("Run", true);
+    //}
 
     void Update()
     {
         Movement();
         ActivateAnimations();
     }
-    public void OnAim(InputValue value)
+    public void OnApuntar(InputValue value)
     {
-        AimInput(value.isPressed);
+        ApuntarInput(value.isPressed);
     }
-    public void AimInput(bool newAimState) 
+    public void ApuntarInput(bool newAimState) 
     {
-        aim = newAimState;
+        Apuntar = newAimState;
     }
     private void Movement()
     {
@@ -91,7 +105,7 @@ public class Player : MonoBehaviour
         float dieInput = dieAction.ReadValue<float>();
         float bendWalkInput = bendAction.ReadValue<float>();
         float shootInput = shootAction.ReadValue<float>();
-        float apuntarInput = shootAction.ReadValue<float>();
+        float apuntarInput = apuntarAction.ReadValue<float>();
 
 
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
@@ -109,10 +123,10 @@ public class Player : MonoBehaviour
         anim.SetBool("caminarAbajo", bendWalkInput == 1);
         anim.SetBool("Disparar", shootInput == 1);
         anim.SetBool("Apuntar", apuntarInput == 1);
-        //
-        if (shootInput == 1)
+    
+        if (apuntarInput == 1)
         {
-            anim.SetBool("Apuntar", false);
+            anim.SetBool("Disparar", false);
         }
         //AGACHARSE CAMINANDO
         if (bendWalkInput == 1)

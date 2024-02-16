@@ -60,9 +60,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aim",
+                    "name": "Apuntar",
                     "type": "PassThrough",
                     "id": "6846a652-4862-4173-a362-230aea9f49d1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Disparar",
+                    "type": "PassThrough",
+                    "id": "bebbf7bb-efb0-4a2c-9b17-25e1a607b7ea",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -253,7 +262,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
+                    "action": "Apuntar",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -264,7 +273,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
+                    "action": "Disparar",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
