@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CameraShoot : MonoBehaviour
 {
-    [SerializeField]private CinemachineVirtualCamera aimVirtualCamera;
+    [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
     private Player player;
 
     // Start is called before the first frame update

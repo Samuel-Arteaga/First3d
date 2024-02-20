@@ -124,10 +124,14 @@ public class Player : MonoBehaviour
         anim.SetBool("Disparar", shootInput == 1);
         anim.SetBool("Apuntar", apuntarInput == 1);
     
-        if (apuntarInput == 1)
-        {
-            anim.SetBool("Disparar", false);
-        }
+        //if (apuntarInput == 1)
+        //{
+        //    anim.SetBool("Disparar", false);
+        //}
+        //if (shootInput == 1)
+        //{
+        //    anim.SetBool("Apuntar", false);
+        //}
         //AGACHARSE CAMINANDO
         if (bendWalkInput == 1)
         {
