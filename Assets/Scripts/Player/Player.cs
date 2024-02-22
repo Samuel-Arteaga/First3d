@@ -90,8 +90,8 @@ public class Player : MonoBehaviour
 
         if (moveDirection != Vector3.zero)
         {
-            Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.Euler(0, cameraPosition.eulerAngles.y, 0);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
         controller.Move(moveDirection * playerSpeed * Time.deltaTime);
