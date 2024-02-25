@@ -9,12 +9,12 @@ using UnityEngine.InputSystem.Controls;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float playerSpeed = 3.0f;
+    private float playerSpeed = 1.0f;
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
-    private float rotationSpeed = 5.0f;
-    //private bool _isGrounded;
+    private float rotationSpeed = 1.0f;
+   
     private bool _jumpPressed;
     private float gravityValue = -9.81f;
 
