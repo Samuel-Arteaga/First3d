@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class CameraShoot : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
-    [SerializeField] private float rotationSpeed = 2.0f;
+    [SerializeField] private float rotationSpeed = 0.25f;
     private Player player;
     private Transform cameraPosition;
 
@@ -31,8 +31,8 @@ public class CameraShoot : MonoBehaviour
             aimVirtualCamera.gameObject.SetActive(true);
 
             //Rotacion de la camara primera persona
-            float mouseX = Mouse.current.delta.x.ReadValue() * rotationSpeed * Time.deltaTime;
-            float mouseY = Mouse.current.delta.y.ReadValue() * rotationSpeed * Time.deltaTime;
+            float mouseX = Mouse.current.delta.x.ReadValue() * rotationSpeed;
+            float mouseY = Mouse.current.delta.y.ReadValue() * rotationSpeed;
 
             transform.Rotate(Vector3.up, mouseX);
             cameraPosition.Rotate(Vector3.left, mouseY);

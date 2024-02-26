@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028355, g: 0.22571374, b: 0.30692255, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -180,8 +180,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 60037195}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.4021792, y: 0.034596015, z: -0.015209984, w: 0.9147807}
-  m_LocalPosition: {x: -0.59583807, y: 2.1100001, z: 0.21262622}
+  m_LocalRotation: {x: 0.40211576, y: 0.036927707, z: -0.016233977, w: 0.9146998}
+  m_LocalPosition: {x: -0.60634005, y: 2.1100001, z: 0.21323395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1883,7 +1883,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 896456931}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.042873964, y: -0.5591819, z: 0.02897452, w: 0.8274285}
+  m_LocalRotation: {x: 0.042873964, y: -0.55918187, z: 0.028974516, w: 0.8274285}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2147,8 +2147,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336585342}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00009632307, y: 0.998148, z: -0.0608116, w: 0.0015810251}
-  m_LocalPosition: {x: -0.59583807, y: 2.1100001, z: 0.21262622}
+  m_LocalRotation: {x: 0.00010687361, y: 0.9981478, z: -0.060810305, w: 0.0017542363}
+  m_LocalPosition: {x: -0.60634005, y: 2.1100001, z: 0.21323395}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2502,7 +2502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538883964}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.018026426, y: -0.5617657, z: 0.0122448765, w: 0.8270093}
+  m_LocalRotation: {x: 0.018026425, y: -0.5617657, z: 0.012244875, w: 0.8270093}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3071,7 +3071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aimVirtualCamera: {fileID: 999457210}
-  rotationSpeed: 2
+  rotationSpeed: 0.25
 --- !u!4 &1937943534 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 243294404591269587, guid: 6fec2dd7485518e488b5060f4ebdea87,
