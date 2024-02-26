@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class CameraShoot : MonoBehaviour
 {
     [SerializeField] private CinemachineVirtualCamera aimVirtualCamera;
-    [SerializeField] private float rotationSpeed = 5.0f;
+    [SerializeField] private float rotationSpeed = 2.0f;
     private Player player;
     private Transform cameraPosition;
 

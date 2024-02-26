@@ -9,13 +9,14 @@ using UnityEngine.InputSystem.Controls;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float playerSpeed = 1.0f;
+    private float playerSpeed = 0.5f;
     [SerializeField]
     private float jumpHeight = 1.0f;
     [SerializeField]
-    private float rotationSpeed = 1.0f;
+    private float rotationSpeed = 0.5f;
    
-    private bool _jumpPressed;
+    private bool _jumpPressed; 
+
     private float gravityValue = -9.81f;
 
     private Vector3 playerVelocity;
@@ -86,7 +87,7 @@ public class Player : MonoBehaviour
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
-        moveDirection.y = 0f;
+        moveDirection.y = 0.5f;
 
         if (moveDirection != Vector3.zero)
         {
