@@ -116,6 +116,11 @@ public class Player : MonoBehaviour
 
         // Activar animaciones según las condiciones
         anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 0.5f);
+        //anim.SetBool("CaminarAtras", movementMagnitude == 1);
+        //if (movementMagnitude == 1)
+        //{
+        //    anim.SetBool("Caminar", false);
+        //}
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput > 0.5f);
         anim.SetBool("HipHop", danceInput == 1);
