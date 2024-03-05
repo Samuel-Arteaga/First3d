@@ -4,26 +4,30 @@ using UnityEngine;
 
 public class ActivateObject : MonoBehaviour
 {
+    [Header("BATE DE PINCHOS")]
     public GameObject bateMap;
     public GameObject batePlayer;
-    // Start is called before the first frame update
+
+    [Header("MASCARA DE SAMU")]
+    public GameObject mascaraMap;
+    public GameObject mascaraPlayer;
+
     void Start()
     {
         batePlayer.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("bate"))
         {
-            Debug.Log("Lo ha tomado");
             bateMap.SetActive(false);
             batePlayer.SetActive(true);
+        }
+        else if (other.gameObject.CompareTag("mascara"))
+        {
+            mascaraMap.SetActive(false);
+            mascaraPlayer.SetActive(true);
         }
     }
 }
