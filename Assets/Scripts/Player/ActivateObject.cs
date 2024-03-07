@@ -12,9 +12,14 @@ public class ActivateObject : MonoBehaviour
     public GameObject mascaraMap;
     public GameObject mascaraPlayer;
 
+    [Header("CHALECO DE SAMU")]
+    public GameObject chalecoMap;
+    public GameObject chalecoPlayer;
+
     void Start()
     {
         batePlayer.SetActive(false);
+        chalecoPlayer.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,6 +33,11 @@ public class ActivateObject : MonoBehaviour
         {
             mascaraMap.SetActive(false);
             mascaraPlayer.SetActive(true);
+        }
+        else if (other.gameObject.CompareTag("chaleco"))
+        {
+            chalecoMap.SetActive(false);
+            chalecoPlayer.SetActive(true);
         }
     }
 }
