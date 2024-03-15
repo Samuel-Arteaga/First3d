@@ -108,24 +108,40 @@ public class Player : MonoBehaviour
         float shootInput = shootAction.ReadValue<float>();
         float apuntarInput = apuntarAction.ReadValue<float>();
 
-
         Vector3 moveDirection = cameraPosition.forward * direction.y + cameraPosition.right * direction.x;
         moveDirection.y = 0f;
 
         float movementMagnitude = moveDirection.magnitude;
 
         // Activar animaciones según las condiciones
-        anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 0.5f);
- 
+        anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 1);
         anim.SetBool("idle", movementMagnitude == 0);
-        anim.SetBool("Run", runInput > 0.5f);
+        anim.SetBool("Run", runInput == 1);
         anim.SetBool("HipHop", danceInput == 1);
         anim.SetBool("Jump", jumpInput == 1);
         anim.SetBool("Die", dieInput == 1);
         anim.SetBool("caminarAbajo", bendWalkInput == 1);
         anim.SetBool("Disparar", shootInput == 1);
         anim.SetBool("Apuntar", apuntarInput == 1);
-    
+
+        if(direction.y < 0f)
+        {
+            anim.SetBool("Caminar", false);
+            anim.SetBool("CaminarAtras", true);
+        }
+        else
+        {
+            anim.SetBool("Caminar", true);
+            anim.SetBool("CaminarAtras", false);
+        }
+
+        if(direction.x == 0 && direction.y == 0)
+        {
+            anim.SetBool("Caminar", false);
+            anim.SetBool("idle", true);
+        }
+       
+       
         //if (apuntarInput == 1)
         //{
         //    anim.SetBool("Disparar", false);
@@ -134,6 +150,7 @@ public class Player : MonoBehaviour
         //{
         //    anim.SetBool("Apuntar", false);
         //}
+
         //AGACHARSE CAMINANDO
         if (bendWalkInput == 1)
         {
@@ -145,7 +162,6 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("idle", false);
         }
-
         //SALTO
         if (jumpInput == 1 && !_jumpPressed)
         {
