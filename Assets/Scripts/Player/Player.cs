@@ -53,7 +53,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-   
+        //StayIdle();
     }
     //private void OnEnable()
     //{
@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     //private void OnDisable()
     //{
     //    runAction.performed -= Run;
+
     //    runAction.performed -= Run;
     //}
     //private void Run(InputAction.CallbackContext ctx)
@@ -97,6 +98,7 @@ public class Player : MonoBehaviour
 
         controller.Move(moveDirection * playerSpeed * Time.deltaTime);
     }
+
     private void ActivateAnimations()
     {
         Vector2 direction = moveAction.ReadValue<Vector2>();
@@ -114,7 +116,7 @@ public class Player : MonoBehaviour
         float movementMagnitude = moveDirection.magnitude;
 
         // Activar animaciones según las condiciones
-        anim.SetBool("Caminar", movementMagnitude > 0 && runInput <= 1);
+        anim.SetBool("Caminar", movementMagnitude > 0 /*&& runInput <= 1*/);
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput == 1);
         anim.SetBool("HipHop", danceInput == 1);
@@ -124,24 +126,41 @@ public class Player : MonoBehaviour
         anim.SetBool("Disparar", shootInput == 1);
         anim.SetBool("Apuntar", apuntarInput == 1);
 
-        if(direction.y < 0f)
+        
+
+        //IDLE
+        if (direction.x == 0 && direction.y == 0)
+        {
+            anim.SetBool("idle", true);
+            anim.SetBool("Run", false);
+
+        }
+        else anim.SetBool("idle", false);
+
+        //CAMINAR ATRAS
+        if (direction.y < 0f)
         {
             anim.SetBool("Caminar", false);
             anim.SetBool("CaminarAtras", true);
+            
         }
         else
         {
-            anim.SetBool("Caminar", true);
             anim.SetBool("CaminarAtras", false);
         }
 
-        if(direction.x == 0 && direction.y == 0)
+        //CAMBIAR DE CAMINAR A RUN
+        if (direction.y > 0f) 
         {
-            anim.SetBool("Caminar", false);
-            anim.SetBool("idle", true);
+            anim.SetBool("Caminar", true);
+            if(runInput == 1)
+            {
+                anim.SetBool("Run", true);
+                anim.SetBool("Caminar", false);
+
+            }
         }
-       
-       
+
         //if (apuntarInput == 1)
         //{
         //    anim.SetBool("Disparar", false);
