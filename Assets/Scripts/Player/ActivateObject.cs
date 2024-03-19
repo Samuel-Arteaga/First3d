@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class ActivateObject : MonoBehaviour
 {
-    public string objetoTag; 
-
     private void OnTriggerEnter(Collider other)
     {
-
-        if (other.CompareTag(objetoTag))
+        Debug.Log(other.gameObject.name + "ASDASD");
+        if (other.TryGetComponent<IActivable>(out IActivable activable))
         {
-            IActivable activable = other.GetComponent<IActivable>();
-            if (activable != null)
-            {
-                activable.ActivateObject();
-            }
+            Debug.Log(other.gameObject.name);
+            activable.ActivateObject();
+
         }
     }
 }
+
