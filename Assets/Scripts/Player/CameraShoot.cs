@@ -10,6 +10,7 @@ public class CameraShoot : MonoBehaviour
     [SerializeField] private float rotationSpeed = 0.25f;
     private Player player;
     private Transform cameraPosition;
+    public GameObject mira;
 
     // Start is called before the first frame update
     private void Awake()
@@ -20,7 +21,7 @@ public class CameraShoot : MonoBehaviour
     }
     void Start()
     {
-        
+        mira.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,6 +30,8 @@ public class CameraShoot : MonoBehaviour
         if (player.Apuntar)
         {
             aimVirtualCamera.gameObject.SetActive(true);
+            mira.SetActive(true);
+
 
             //Rotacion de la camara primera persona
             float mouseX = Mouse.current.delta.x.ReadValue() * rotationSpeed;
