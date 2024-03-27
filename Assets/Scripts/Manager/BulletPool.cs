@@ -16,7 +16,7 @@ public class BulletPool : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject); // Si ya hay una instancia de BulletPool, destruye esta para evitar duplicados
+            Destroy(gameObject);
         }
 
         InitializePool();
@@ -26,7 +26,7 @@ public class BulletPool : MonoBehaviour
     {
         for (int i = 0; i < bulletSize; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform); // Instancia la bala como hijo de este transform
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform); 
             bullet.SetActive(false);
             bullets.Add(bullet);
         }

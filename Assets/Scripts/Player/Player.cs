@@ -29,6 +29,13 @@ public class Player : MonoBehaviour
     public bool Apuntar;
     private CharacterController controller;
 
+    //ARMA
+    public Transform positionArma;
+    public Transform rotationArma;
+    public float velocidadBala = 4.0f;
+    private float fuerzaBala = 1000f;
+
+
     private Transform cameraPosition;
 
     private void Awake()
@@ -44,6 +51,7 @@ public class Player : MonoBehaviour
         bendAction = playerInput.actions.FindAction("Bend");
         apuntarAction = playerInput.actions.FindAction("Apuntar");
         shootAction = playerInput.actions.FindAction("Disparar");
+        StartCoroutine(ShootCoroutine());
         cameraPosition = Camera.main.transform;   
     }
 
@@ -134,16 +142,6 @@ public class Player : MonoBehaviour
 
             }
         }
-
-        //if (apuntarInput == 1)
-        //{
-        //    anim.SetBool("Disparar", false);
-        //}
-        //if (shootInput == 1)
-        //{
-        //    anim.SetBool("Apuntar", false);
-        //}
-
         //AGACHARSE CAMINANDO
         if (bendWalkInput == 1)
         {
@@ -182,6 +180,46 @@ public class Player : MonoBehaviour
             anim.SetBool("Caminar", false);
             anim.SetBool("Run", false);
         }
+        //DISPARAR
+        if (shootInput == 1)
+        {
+            Shoot();
+        }
+
+    }
+    private IEnumerator ShootCoroutine()
+    {
+
+        while (true)
+        {
+            
+            Shoot();
+            yield return new WaitForSeconds(4f);
+        }
+    }
+    private void Shoot()
+    {
+        GameObject bullet = BulletPool.Instance.GetBullet(); 
+      
+        if (bullet != null)
+        {
+            bullet.transform.position = positionArma.position;
+            bullet.transform.rotation = transform.rotation;
+            Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+            if (bulletRigidbody != null)
+            {
+                // Aplicar velocidad inicial en la dirección del cañón del arma
+                bulletRigidbody.AddForce(rotationArma.forward * fuerzaBala, ForceMode.VelocityChange);
+            }
+
+            bullet.SetActive(true);
+            StartCoroutine(DisableBullet(bullet));
+        }
+    }
+    private IEnumerator DisableBullet(GameObject bullet)
+    {
+        yield return new WaitForSeconds(8f);
+        bullet.SetActive(false);
     }
 
 
