@@ -21,7 +21,7 @@ public class PlayerController: MonoBehaviour
     }
     public void SavePlayerPosition()
     {
-        PlayerData playerData = new PlayerData(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z);
+        PlayerData playerData = new PlayerData(playerTransform.position.x, playerTransform.position.y, playerTransform.position.z, playerTransform.rotation.x, playerTransform.rotation.y, playerTransform.rotation.z);
         string jsonData = JsonUtility.ToJson(playerData);
         try
         {

@@ -1,10 +1,7 @@
-using JetBrains.Annotations;
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Controls;
 
 public class Player : MonoBehaviour
 {
@@ -14,13 +11,11 @@ public class Player : MonoBehaviour
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float rotationSpeed = 0.5f;
-   
     private bool _jumpPressed; 
-
     private float gravityValue = -9.81f;
-
     private Vector3 playerVelocity;
 
+    //ACTIONS
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction runAction;
@@ -51,25 +46,6 @@ public class Player : MonoBehaviour
         shootAction = playerInput.actions.FindAction("Disparar");
         cameraPosition = Camera.main.transform;   
     }
-    void Start()
-    {
-        //StayIdle();
-    }
-    //private void OnEnable()
-    //{
-    //    runAction.performed += Run;
-    //    runAction.canceled += Run;
-    //}
-    //private void OnDisable()
-    //{
-    //    runAction.performed -= Run;
-
-    //    runAction.performed -= Run;
-    //}
-    //private void Run(InputAction.CallbackContext ctx)
-    //{
-    //    anim.SetBool("Run", true);
-    //}
 
     void Update()
     {
@@ -116,7 +92,7 @@ public class Player : MonoBehaviour
         float movementMagnitude = moveDirection.magnitude;
 
         // Activar animaciones según las condiciones
-        anim.SetBool("Caminar", movementMagnitude > 0 /*&& runInput <= 1*/);
+        anim.SetBool("Caminar", movementMagnitude > 0);
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput == 1);
         anim.SetBool("HipHop", danceInput == 1);
@@ -125,8 +101,6 @@ public class Player : MonoBehaviour
         anim.SetBool("caminarAbajo", bendWalkInput == 1);
         anim.SetBool("Disparar", shootInput == 1);
         anim.SetBool("Apuntar", apuntarInput == 1);
-
-        
 
         //IDLE
         if (direction.x == 0 && direction.y == 0)
@@ -175,22 +149,20 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("idle", false);
         }
-        // Activar la transición de Idle a HipHop cuando danceInput es 1
+
         //BAILE
         if (danceInput == 1)
         {
             anim.SetBool("idle", false);
         }
+
         //SALTO
         if (jumpInput == 1 && !_jumpPressed)
         {
-            //desactivo animaciones antes activadas
             anim.SetBool("idle", false);
             anim.SetBool("Caminar", false);
             anim.SetBool("Run", false);
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
-
-            //Indicar que el salto ha sido activado
             _jumpPressed = true;
         }
 
@@ -210,7 +182,6 @@ public class Player : MonoBehaviour
             anim.SetBool("Caminar", false);
             anim.SetBool("Run", false);
         }
-
     }
 
 
