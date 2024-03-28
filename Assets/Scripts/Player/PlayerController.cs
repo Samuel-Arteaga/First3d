@@ -12,6 +12,7 @@ public class PlayerController: MonoBehaviour
         if (other.CompareTag("data"))
         {
             SavePlayerPosition();
+            SoundManager.Instance.Guardado();
         }
     }
     private void Awake()

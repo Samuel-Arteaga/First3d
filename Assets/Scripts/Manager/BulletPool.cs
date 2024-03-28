@@ -26,7 +26,7 @@ public class BulletPool : MonoBehaviour
     {
         for (int i = 0; i < bulletSize; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform); 
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity, transform);
             bullet.SetActive(false);
             bullets.Add(bullet);
         }
@@ -38,6 +38,7 @@ public class BulletPool : MonoBehaviour
         {
             if (!bullet.activeInHierarchy)
             {
+                
                 return bullet;
             }
         }

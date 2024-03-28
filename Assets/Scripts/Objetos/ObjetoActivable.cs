@@ -16,6 +16,7 @@ public class ObjetoActivable : MonoBehaviour, IActivable
     }
     public void ActivateObject()
     {
+        SoundManager.Instance.collectObjects();
         objetoMap.SetActive(false);
         image.SetActive(true);
         objetoPlayer.SetActive(true);

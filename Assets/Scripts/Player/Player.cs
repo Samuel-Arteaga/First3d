@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     private float jumpHeight = 1.0f;
     [SerializeField]
     private float rotationSpeed = 0.5f;
-    private bool _jumpPressed; 
+    private bool _jumpPressed;
+    private bool canJump = true;
     private float gravityValue = -9.81f;
     private Vector3 playerVelocity;
 
@@ -32,8 +33,8 @@ public class Player : MonoBehaviour
     //ARMA
     public Transform positionArma;
     public Transform rotationArma;
-    public float velocidadBala = 4.0f;
-    private float fuerzaBala = 1000f;
+    public float velocidadBala = 50.0f;
+    
 
 
     private Transform cameraPosition;
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
         bendAction = playerInput.actions.FindAction("Bend");
         apuntarAction = playerInput.actions.FindAction("Apuntar");
         shootAction = playerInput.actions.FindAction("Disparar");
-        StartCoroutine(ShootCoroutine());
+        //StartCoroutine(ShootCoroutine());
         cameraPosition = Camera.main.transform;   
     }
 
@@ -104,7 +105,7 @@ public class Player : MonoBehaviour
         anim.SetBool("idle", movementMagnitude == 0);
         anim.SetBool("Run", runInput == 1);
         anim.SetBool("HipHop", danceInput == 1);
-        anim.SetBool("Jump", jumpInput == 1);
+        //anim.SetBool("Prepararse", jumpInput == 1);
         anim.SetBool("Die", dieInput == 1);
         anim.SetBool("caminarAbajo", bendWalkInput == 1);
         anim.SetBool("Disparar", shootInput == 1);
@@ -142,11 +143,13 @@ public class Player : MonoBehaviour
 
             }
         }
-        //AGACHARSE CAMINANDO
+        //AGACHARSE
         if (bendWalkInput == 1)
         {
-            anim.SetBool("idle", false);
+            anim.SetBool("caminarAbajo", true);
         }
+        
+       
 
         //BAILE
         if (danceInput == 1)
@@ -154,48 +157,50 @@ public class Player : MonoBehaviour
             anim.SetBool("idle", false);
         }
 
-        //SALTO
-        if (jumpInput == 1 && !_jumpPressed)
+        if (canJump && jumpInput == 1 && !_jumpPressed)
         {
             anim.SetBool("idle", false);
             anim.SetBool("Caminar", false);
             anim.SetBool("Run", false);
+            anim.SetBool("Prepararse", true);
+           
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
             _jumpPressed = true;
+            canJump = false;
         }
-
-        // Si el jugador no está presionando la tecla de salto, se restablece
-        if (jumpInput == 0)
+        else if (jumpInput == 0)
         {
+            //anim.SetBool("idle", true);
+            anim.SetBool("Prepararse", false);
+            
             _jumpPressed = false;
+            canJump = true;
+        }
+        if (controller.isGrounded)
+        {
+            canJump = true;
         }
         // Aplico gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
+        // Muevo el personaje
         controller.Move(playerVelocity * Time.deltaTime);
 
         //MORIR
-        if(dieInput == 1)
+        if (dieInput == 1)
         {
             anim.SetBool("idle", false);
             anim.SetBool("Caminar", false);
             anim.SetBool("Run", false);
+            SoundManager.Instance.Morir();
         }
         //DISPARAR
-        if (shootInput == 1)
+        if (shootInput == 1 && apuntarInput == 1)
         {
+            SoundManager.Instance.Disparo();
             Shoot();
         }
+       
 
-    }
-    private IEnumerator ShootCoroutine()
-    {
-
-        while (true)
-        {
-            
-            Shoot();
-            yield return new WaitForSeconds(4f);
-        }
     }
     private void Shoot()
     {
@@ -204,12 +209,11 @@ public class Player : MonoBehaviour
         if (bullet != null)
         {
             bullet.transform.position = positionArma.position;
-            bullet.transform.rotation = transform.rotation;
+            bullet.transform.rotation = rotationArma.rotation;
             Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
             if (bulletRigidbody != null)
             {
-                // Aplicar velocidad inicial en la dirección del cañón del arma
-                bulletRigidbody.AddForce(rotationArma.forward * fuerzaBala, ForceMode.VelocityChange);
+                bulletRigidbody.AddForce(transform.forward * velocidadBala);
             }
 
             bullet.SetActive(true);
@@ -218,7 +222,7 @@ public class Player : MonoBehaviour
     }
     private IEnumerator DisableBullet(GameObject bullet)
     {
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(3.0f);
         bullet.SetActive(false);
     }
 
