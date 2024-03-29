@@ -36,7 +36,6 @@ public class CameraShoot : MonoBehaviour
             //Rotacion de la camara primera persona
             float mouseX = Mouse.current.delta.x.ReadValue() * rotationSpeed;
             float mouseY = Mouse.current.delta.y.ReadValue() * rotationSpeed;
-            Debug.Log("X"+mouseX+" "+mouseY);
             transform.Rotate(Vector3.up, mouseX);
             cameraPosition.Rotate(Vector3.left, mouseY);
         }

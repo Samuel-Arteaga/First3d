@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
         bendAction = playerInput.actions.FindAction("Bend");
         apuntarAction = playerInput.actions.FindAction("Apuntar");
         shootAction = playerInput.actions.FindAction("Disparar");
-        //StartCoroutine(ShootCoroutine());
         cameraPosition = Camera.main.transform;   
     }
 
@@ -148,8 +147,6 @@ public class Player : MonoBehaviour
         {
             anim.SetBool("caminarAbajo", true);
         }
-        
-       
 
         //BAILE
         if (danceInput == 1)
@@ -157,6 +154,7 @@ public class Player : MonoBehaviour
             anim.SetBool("idle", false);
         }
 
+        //SALTO
         if (canJump && jumpInput == 1 && !_jumpPressed)
         {
             anim.SetBool("idle", false);
@@ -182,7 +180,6 @@ public class Player : MonoBehaviour
         }
         // Aplico gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
-        // Muevo el personaje
         controller.Move(playerVelocity * Time.deltaTime);
 
         //MORIR
@@ -199,8 +196,6 @@ public class Player : MonoBehaviour
             SoundManager.Instance.Disparo();
             Shoot();
         }
-       
-
     }
     private void Shoot()
     {
@@ -225,6 +220,4 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(3.0f);
         bullet.SetActive(false);
     }
-
-
 }
