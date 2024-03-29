@@ -1,2 +1,2 @@
-                                                     # RPG -- MUNDO BONITO
+# RPG -- MUNDO BONITO
 Holaaa
