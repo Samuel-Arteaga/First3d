@@ -20,10 +20,16 @@ Finalmente el personaje dispone de un HUD:
 Accion y Aventura.
 
 # Controles Destallados:
+*** 
 AWSD: Caminar.
+*** 
 Shift: Run.
+*** 
 F: Dance.
+*** 
 G: Caminar Agachado.
+*** 
 P: Morir.
+*** 
 
 
