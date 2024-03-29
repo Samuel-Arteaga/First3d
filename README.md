@@ -15,3 +15,15 @@ Asi mismo tenemos zonas de guardado automatico distribuidas en el mapa:
 Finalmente el personaje dispone de un HUD:
 
 ![pasted image 0 (3)](https://github.com/Samuel-Arteaga/First3d/assets/145785950/43cc3e77-c94a-4dbc-9f54-794049c39bd6)
+
+# Genero:
+Accion y Aventura.
+
+# Controles Destallados:
+AWSD: Caminar.
+Shift: Run.
+F: Dance.
+G: Caminar Agachado.
+P: Morir.
+
+
