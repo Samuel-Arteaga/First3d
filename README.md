@@ -30,6 +30,4 @@ F: Dance.
 G: Caminar Agachado.
 *** 
 P: Morir.
-*** 
-
-
+***
